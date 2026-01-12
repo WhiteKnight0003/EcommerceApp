@@ -53,7 +53,7 @@ fun HomeScreen(
 
             // category section
             SectionTile("Category", "See All") {
-
+                navController.navigate("Categories")
             }
             // Mock the categories
             val selectedCategory = remember { mutableStateOf(0) }

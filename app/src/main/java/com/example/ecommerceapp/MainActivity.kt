@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.ecommerceapp.category.CategoryScreen
 import com.example.ecommerceapp.screen.cart.CartScreen
 import com.example.ecommerceapp.screen.home.HomeScreen
 import com.example.ecommerceapp.screen.profile.ProfileScreen
@@ -42,6 +43,9 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("Profile"){
                     ProfileScreen(navController = navController, onSignOut = {})
+                }
+                composable("Categories"){
+                    CategoryScreen(navController = navController)
                 }
             }
         }
