@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.ecommerceapp.model.Category
+import com.example.ecommerceapp.screen.navigator.Screens
 
 @Composable
 fun CategoryScreen(
@@ -60,9 +61,9 @@ fun CategoryScreen(
                     CategoryItem(
                         category,
                         onClick = {
-//                            navController.navigate(
-//
-//                            )
+                            navController.navigate(
+                                Screens.ProductsList.createRoute(category.id)
+                            )
                         }
                     )
                 }

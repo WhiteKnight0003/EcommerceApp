@@ -17,7 +17,7 @@ import com.example.ecommerceapp.screen.navigator.Screens
 
 @Composable
 fun ProductScreen(
-    categoryId: Int,
+    categoryId: String,
     navController: NavController
 ) {
 

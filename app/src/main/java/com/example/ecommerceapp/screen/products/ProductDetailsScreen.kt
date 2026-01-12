@@ -23,12 +23,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.ecommerceapp.model.Product
 
 @Composable
 fun ProductDetailsScreen(
     productID: String,
+    navController: NavController
 ) {
     // Ferch produuct Detaila
 
