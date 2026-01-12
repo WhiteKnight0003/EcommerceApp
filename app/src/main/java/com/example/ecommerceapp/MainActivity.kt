@@ -13,7 +13,9 @@ import com.example.ecommerceapp.screen.home.HomeScreen
 import com.example.ecommerceapp.screen.navigator.Screens
 import com.example.ecommerceapp.screen.products.ProductDetailsScreen
 import com.example.ecommerceapp.screen.products.ProductScreen
+import com.example.ecommerceapp.screen.profile.LoginScreen
 import com.example.ecommerceapp.screen.profile.ProfileScreen
+import com.example.ecommerceapp.screen.profile.SignUpScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +26,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             NavHost(
                 navController = navController,
-                startDestination = Screens.Home.route
+                startDestination = Screens.Signup.route
             ) {
                 composable(Screens.Home.route){
                     HomeScreen(
@@ -42,6 +44,29 @@ class MainActivity : ComponentActivity() {
                 composable(Screens.CategoryList.route){
                     CategoryScreen(navController = navController)
                 }
+                composable(Screens.Login.route){
+                    LoginScreen(
+                        navController = navController,
+                        onLoginSucess = {
+                            navController.navigate(Screens.Home.route)
+                        },
+                        onNavigateToSignUp = {
+                            navController.navigate(Screens.Signup.route)
+                        }
+                    )
+                }
+                composable(Screens.Signup.route){
+                    SignUpScreen(
+                        navController = navController,
+                        onSignUpSucess = {
+                            navController.navigate(Screens.Home.route)
+                        },
+                        onNavigateToLogin = {
+                            navController.navigate(Screens.Login.route)
+                        }
+                    )
+                }
+
                 composable(Screens.ProductDetails.route){
                     val productID = it.arguments?.getString("productId")
                     if(productID != null)

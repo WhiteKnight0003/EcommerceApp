@@ -25,23 +25,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun SignUpScreen(
+fun LoginScreen(
     navController: NavController,
-    onNavigateToLogin: () -> Unit,
-    onSignUpSucess: () -> Unit
-) {
+    onNavigateToSignUp: () -> Unit,
+    onLoginSucess: () -> Unit
+){
     var email = remember { mutableStateOf("") }
     var password = remember { mutableStateOf("") }
-    var confirmPassword = remember { mutableStateOf("") }
-    var passwordError = remember { mutableStateOf<String?>(null) }
-    val authState = remember { mutableStateOf(false) }
 
-    // Sử dụng LaunchedEffect để xử lý điều hướng sau khi trạng thái thay đổi
-    if (authState.value) {
-        LaunchedEffect(Unit) {
-            onSignUpSucess()
+    val authState = false
+    if(authState)
+        LaunchedEffect(Unit){
+            onLoginSucess()
         }
-    }
 
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -49,7 +45,7 @@ fun SignUpScreen(
         verticalArrangement = Arrangement.Center
     ){
         Text(
-            text = "Create Accouunt",
+            text = "Login Screen",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 32.dp)
         )
@@ -71,55 +67,24 @@ fun SignUpScreen(
             label = {Text("Password")},
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Next
+                imeAction = ImeAction.Done
             ),
             modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
             singleLine = true
         )
 
-        OutlinedTextField(
-            value= confirmPassword.value,
-            onValueChange = {confirmPassword.value = it},
-            label = {Text("Comfirm Password")},
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done
-            ),
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-            singleLine = true,
-            isError = passwordError.value != null,
-            supportingText = {
-                passwordError.value?.let{
-                    Text(
-                        text = it,
-                        color = MaterialTheme.colorScheme.error
-                    )
-                }
-            }
-        )
         Spacer(Modifier.height(16.dp))
 
         Button(
-            onClick = {
-                if(password.value != confirmPassword.value){
-                    passwordError.value = "Password do not match"
-                }else if(password.value.length <6){
-                    passwordError.value = "Password should be at least 6 character"
-                }
-                else{
-                    passwordError.value = null
-                    // View Model call
-                }
-            },
+            onClick = {},
             modifier = Modifier.fillMaxWidth().height(50.dp)
-//            enabled = email.value.isNotEmpty() && password.value.isNotEmpty() && confirmPassword.value.isNotEmpty() && authState,
-//            !
         ){
-            Text("Sign Up")
+            Text("Login")
         }
         Spacer(Modifier.height(16.dp))
-        TextButton(onClick = onNavigateToLogin) {
-            Text("Already have an account? Login")
+
+        TextButton(onClick = onNavigateToSignUp) {
+            Text("Don't have an account? Sign Up")
         }
     }
 }
