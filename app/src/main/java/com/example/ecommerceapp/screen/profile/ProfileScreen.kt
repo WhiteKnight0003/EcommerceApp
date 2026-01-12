@@ -23,10 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.ecommerceapp.model.UserProfile
 
 @Composable
 fun ProfileScreen(
+    navController : NavController,
     onSignOut : () -> Unit // action signout
 ) {
     val currentUser = UserProfile("11", "chung", "h@gmail.com")

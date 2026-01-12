@@ -18,11 +18,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.ecommerceapp.model.Product
 import kotlin.collections.listOf
 
 @Composable
-fun CartScreen() {
+fun CartScreen(navController : NavController) {
     var carItems = listOf(
         Product("1", "TIvi", 100.5, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/i/tivi-xiaomi-qled-4k-a-pro-43-inch-2026_1_.png", 1),
         Product("4", "Quạt ", 50.6, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/q/u/qu_t_2.png", 2),
@@ -85,15 +86,14 @@ fun CartScreen() {
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
 
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Button(
-                        onClick = {},
-                        modifier = Modifier.fillMaxWidth().height(50.dp)
-                    ) {
-                        Text(text = "Proceed to Checkout")
-                    }
+                Button(
+                    onClick = {},
+                    modifier = Modifier.fillMaxWidth().height(50.dp)
+                ) {
+                    Text(text = "Proceed to Checkout")
                 }
             }
         }
