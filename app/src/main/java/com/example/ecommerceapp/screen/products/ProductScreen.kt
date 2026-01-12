@@ -26,11 +26,11 @@ fun ProductScreen(
 
     // product data
     val products = listOf(
-        Product("1", "TIvi", 100.5, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/i/tivi-xiaomi-qled-4k-a-pro-43-inch-2026_1_.png", "1"),
-        Product("2", "Tu lanh", 200.5, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-rua-bat-doc-lap-bosch-sms6zci37q_1_.png", "2"),
-        Product("3", "Điện thoại", 10.5, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-17-pro-max_3.jpg", "1"),
-        Product("4", "Quạt ", 50.6, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/q/u/qu_t_2.png", "2"),
-        Product("5", "Nồi chiên không dầu", 110.0, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/n/o/noi-chien-khong-dau-gaabor-af-45t01a-5l.1.png", "1"),
+        Product("1", "TIvi", 100.5, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/i/tivi-xiaomi-qled-4k-a-pro-43-inch-2026_1_.png", "đây là cái ti vi","1"),
+        Product("2", "Tu lanh", 200.5, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/may-rua-bat-doc-lap-bosch-sms6zci37q_1_.png", "đây là cái tủ lạnh","2"),
+        Product("3", "Điện thoại", 10.5, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-17-pro-max_3.jpg", "đây là cái điện thoại","1"),
+        Product("4", "Quạt ", 50.6, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/q/u/qu_t_2.png", "đây là cái quạt","2"),
+        Product("5", "Nồi chiên không dầu", 110.0, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/n/o/noi-chien-khong-dau-gaabor-af-45t01a-5l.1.png","đây là cái Nồi chiên không dầu" ,"1"),
     )
     // Display the products
     Column(

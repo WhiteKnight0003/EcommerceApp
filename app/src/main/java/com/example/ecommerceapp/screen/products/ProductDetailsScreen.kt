@@ -74,7 +74,7 @@ fun ProductDetailsScreen(
 
             // Produuct description:
             Text(
-                text = "Product Description",
+                text = product.description,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
