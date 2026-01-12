@@ -1,7 +1,7 @@
 package com.example.ecommerceapp.model
 
 data class Category(
-    val id: Int =0,
+    val id: String ="",
     val name: String = "",
     val iconUrl : String =""
 )

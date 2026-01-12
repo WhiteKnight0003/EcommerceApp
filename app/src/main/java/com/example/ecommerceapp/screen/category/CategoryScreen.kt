@@ -1,4 +1,4 @@
-package com.example.ecommerceapp.category
+package com.example.ecommerceapp.screen.category
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,8 +24,8 @@ fun CategoryScreen(
     navController: NavController
 ) {
     val categories: List<Category> = listOf(
-        Category(1, "Elec", "https://cdn-icons-png.flaticon.com/128/18405/18405048.png"),
-        Category(2, "Elecczxczxc", "https://cdn-icons-png.flaticon.com/128/17408/17408214.png")
+        Category("1", "Elec", "https://cdn-icons-png.flaticon.com/128/18405/18405048.png"),
+        Category("2", "Elecczxczxc", "https://cdn-icons-png.flaticon.com/128/17408/17408214.png")
     )
 
     Column(){
