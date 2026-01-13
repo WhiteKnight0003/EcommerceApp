@@ -1,5 +1,6 @@
 package com.example.ecommerceapp.screen.cart
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,21 +15,27 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.ecommerceapp.model.Product
+import com.example.ecommerceapp.screen.navigator.Screens
+import com.example.ecommerceapp.viewmodel.CartViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlin.collections.listOf
 
 @Composable
-fun CartScreen(navController : NavController) {
-    var carItems = listOf(
-        Product("1", "TIvi", 100.5, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/i/tivi-xiaomi-qled-4k-a-pro-43-inch-2026_1_.png", "1"),
-        Product("4", "Quạt ", 50.6, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/q/u/qu_t_2.png", "2"),
-        Product("5", "Nồi chiên không dầu", 110.0, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/n/o/noi-chien-khong-dau-gaabor-af-45t01a-5l.1.png", "1"),
-    )
+fun CartScreen(
+    navController : NavController,
+    cartViewModel: CartViewModel = hiltViewModel()
+) {
+    val cartItems = cartViewModel.cartItems.collectAsState(initial = emptyList()).value
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp)
@@ -38,7 +45,7 @@ fun CartScreen(navController : NavController) {
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
-        if(carItems.isEmpty()){ // giỏ hàng trống
+        if(cartItems.isEmpty()){ // giỏ hàng trống
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -51,7 +58,9 @@ fun CartScreen(navController : NavController) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
-                    onClick = {}
+                    onClick = {
+                        navController.popBackStack()
+                    }
                 ) {
                     Text(text = "Continue Shopping")
                 }
@@ -60,10 +69,10 @@ fun CartScreen(navController : NavController) {
             LazyColumn(
                 modifier = Modifier.weight(1f)
             ) {
-                items(carItems){ item ->
+                items(cartItems){ item ->
                     CartItemCard(
                         item = item,
-                        onRemoveItem = {}
+                        onRemoveItem = { cartViewModel.removeItemFromCart(item)}
                     )
                 }
             }
@@ -82,7 +91,7 @@ fun CartScreen(navController : NavController) {
                     )
                     // calculator total price
                     Text(
-                        text = "... $",
+                        text = "$${cartViewModel.calculateTotal(cartItems)} $",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -90,7 +99,14 @@ fun CartScreen(navController : NavController) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
-                    onClick = {},
+                    onClick = {
+                        cartViewModel.clearCart()
+                        // Handle checkout
+                        Toast.makeText(context, "Payment Success", Toast.LENGTH_SHORT).show()
+
+                        // 2. Quay về trang chủ và dọn dẹp Stack điều hướng
+                        navController.navigate(Screens.Home.route)
+                    },
                     modifier = Modifier.fillMaxWidth().height(50.dp)
                 ) {
                     Text(text = "Proceed to Checkout")

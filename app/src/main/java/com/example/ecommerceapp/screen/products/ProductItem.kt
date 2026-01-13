@@ -28,14 +28,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.ecommerceapp.model.Product
+import com.example.ecommerceapp.viewmodel.CartViewModel
 
 @Composable
 fun ProductItem(
     product: Product,
     onClick: () -> Unit,
-    onAddToCart: () -> Unit
+    onAddToCart: () -> Unit,
+    cartViewModel: CartViewModel = hiltViewModel()
 ) {
     Card(
         modifier = Modifier.padding(8.dp)
@@ -89,7 +92,10 @@ fun ProductItem(
             }
 
             IconButton(
-                onClick= {onAddToCart()},
+                onClick= {
+                    onAddToCart()
+                    cartViewModel.addToCart(product)
+                },
                 modifier = Modifier.align(Alignment.TopEnd).padding(8.dp)
                                 .background(
                                     color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.8f),

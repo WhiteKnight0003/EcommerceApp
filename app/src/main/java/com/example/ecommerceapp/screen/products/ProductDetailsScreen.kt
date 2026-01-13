@@ -29,13 +29,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.ecommerceapp.model.Product
+import com.example.ecommerceapp.viewmodel.CartViewModel
 import com.example.ecommerceapp.viewmodel.ProductDetailsViewModel
 
 @Composable
 fun ProductDetailsScreen(
     productID: String,
     navController: NavController,
-    productDetailsViewModel: ProductDetailsViewModel = hiltViewModel()
+    productDetailsViewModel: ProductDetailsViewModel = hiltViewModel(),
+    cartViewModel: CartViewModel = hiltViewModel()
 ) {
     // Ferch produuct Detaila
 
@@ -88,8 +90,10 @@ fun ProductDetailsScreen(
             )
         }
         IconButton(
-            onClick = {}, // add to card event
-            modifier = Modifier.height(16.dp).background(
+            onClick = {
+                cartViewModel.addToCart(product)
+            }, // add to card event
+            modifier = Modifier.padding(top = 40.dp).height(16.dp).background(
                 color = MaterialTheme.colorScheme.primary,
                 shape = CircleShape
             )

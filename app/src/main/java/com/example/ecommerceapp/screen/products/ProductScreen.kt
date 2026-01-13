@@ -1,5 +1,6 @@
 package com.example.ecommerceapp.screen.products
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.ecommerceapp.model.Product
 import com.example.ecommerceapp.screen.navigator.Screens
+import com.example.ecommerceapp.viewmodel.CartViewModel
 import com.example.ecommerceapp.viewmodel.ProductViewModel
 
 @Composable
@@ -24,11 +26,10 @@ fun ProductScreen(
     categoryId: String,
     navController: NavController,
     productViewModel: ProductViewModel = hiltViewModel(),
+    cartViewModel: CartViewModel = hiltViewModel()
 ) {
 
     // Fetch products from the viewmodel
-
-
     // product data
     LaunchedEffect(categoryId) {
         productViewModel.fetchProductsByCategory(categoryId)// call fun
@@ -62,7 +63,10 @@ fun ProductScreen(
                         onClick = {
                             navController.navigate(Screens.ProductDetails.createRoute(product.id))
                         }, // navigate Product details
-                        onAddToCart = {}, // navigate cart
+                        onAddToCart = {
+                            cartViewModel.addToCart(product)
+                            Log.v("TagY", "Product Added to Cart")
+                        }, // navigate cart
                     )
                 }
             }
