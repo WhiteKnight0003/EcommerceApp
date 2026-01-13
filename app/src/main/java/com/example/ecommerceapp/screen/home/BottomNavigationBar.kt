@@ -25,7 +25,8 @@ import com.example.ecommerceapp.screen.navigator.Screens
 
 @Composable
 fun BottomNavigationBar(
-    navController: NavController
+    navController: NavController,
+    cartItemCount: Int
 ) {
     val currentRoute= ""
     val items = listOf(
@@ -40,16 +41,10 @@ fun BottomNavigationBar(
             route = Screens.CategoryList.route
         ),
         BottomNavItem(
-            title = "Wishlist",
-            icon = Icons.Default.Favorite,
-            route = Screens.Cart.route,
-            badgeCount = 5
-        ),
-        BottomNavItem(
             title = "Cart",
             icon = Icons.Default.ShoppingCart,
             route = Screens.Cart.route,
-            badgeCount = 3
+            badgeCount = cartItemCount
         ),
         BottomNavItem(
             title = "Profile",

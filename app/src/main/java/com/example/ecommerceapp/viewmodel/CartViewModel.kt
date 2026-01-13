@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.ecommerceapp.model.Product
 import com.example.ecommerceapp.repositories.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -12,6 +14,7 @@ import javax.inject.Inject
 class CartViewModel @Inject constructor(
     private val repository: CartRepository
 ): ViewModel() {
+    val cartCount: Flow<Int> = repository.allCartItems.map{ it.size }
 
     val cartItems = repository.allCartItems
 

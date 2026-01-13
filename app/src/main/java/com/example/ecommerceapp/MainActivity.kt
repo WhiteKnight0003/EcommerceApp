@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -26,6 +27,7 @@ import com.example.ecommerceapp.screen.profile.LoginScreen
 import com.example.ecommerceapp.screen.profile.ProfileScreen
 import com.example.ecommerceapp.screen.profile.SignUpScreen
 import com.example.ecommerceapp.viewmodel.AuthViewModel
+import com.example.ecommerceapp.viewmodel.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,11 +39,15 @@ class MainActivity : ComponentActivity() {
             // navigation
             val navController = rememberNavController()
             val  authViewModel: AuthViewModel = hiltViewModel()
+            val cartViewModel: CartViewModel = hiltViewModel()
 
             val isLoggedIn = remember { derivedStateOf { authViewModel.isLoggedIn } }
 
             val navBackStackEntry = navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry.value?.destination?.route
+
+            val cartCount = cartViewModel.cartItems.collectAsState(initial = emptyList())
+            val itemCount = cartCount.value.size
 
             val hideBar = listOf(
                 Screens.Signup.route,
@@ -57,7 +63,10 @@ class MainActivity : ComponentActivity() {
                  },
                 bottomBar = {
                     if(currentRoute !in hideBar){
-                        BottomNavigationBar(navController)
+                        BottomNavigationBar(
+                            navController,
+                            itemCount
+                        )
                     }
                 },
             )
@@ -82,7 +91,9 @@ class MainActivity : ComponentActivity() {
                             navController = navController,
                             onSignOut = {
                                 authViewModel.SignOut()
-                                navController.navigate(Screens.Login.route)
+                                navController.navigate(Screens.Login.route){
+                                    popUpTo(0) { inclusive = true }
+                                }
                             }
                         )
                     }
