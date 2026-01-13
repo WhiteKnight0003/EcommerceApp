@@ -38,7 +38,7 @@ fun CartScreen(
     val context = LocalContext.current
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp)
+        modifier = Modifier.fillMaxSize().padding(20.dp)
     ) {
         Text(
             text = "Your Cart",

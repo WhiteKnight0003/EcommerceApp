@@ -1,5 +1,6 @@
 package com.example.ecommerceapp.screen.products
 
+import android.R.attr.top
 import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,7 +39,7 @@ fun ProductScreen(
 
     // Display the products
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().padding(top=20.dp)
     ) {
         Text(
             text = "Products of Category ID : $categoryId",

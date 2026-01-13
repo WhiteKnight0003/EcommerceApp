@@ -27,7 +27,9 @@ import com.example.ecommerceapp.viewmodel.CategoryViewModel
 @Composable
 fun CategoryScreen(
     navController: NavController,
-    categoryViewModel: CategoryViewModel = hiltViewModel()
+    categoryViewModel: CategoryViewModel = hiltViewModel(),
+    onCartClick: () -> Unit = {},
+    onProfileClick: () -> Unit = {}
 ) {
     val categories = categoryViewModel.categories.collectAsState().value
 

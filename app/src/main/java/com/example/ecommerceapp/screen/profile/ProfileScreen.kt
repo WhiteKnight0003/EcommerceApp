@@ -39,7 +39,7 @@ fun ProfileScreen(
     val currentUser = remember { mutableStateOf(authViewModel.currentUser) }
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier.fillMaxSize().padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Profile header

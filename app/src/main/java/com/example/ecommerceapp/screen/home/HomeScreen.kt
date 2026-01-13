@@ -21,8 +21,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.ecommerceapp.model.Category
-import com.example.ecommerceapp.model.Product
 import com.example.ecommerceapp.screen.navigator.Screens
 import com.example.ecommerceapp.viewmodel.CategoryViewModel
 import com.example.ecommerceapp.viewmodel.ProductViewModel
@@ -36,13 +34,8 @@ fun HomeScreen(
     productViewModel: ProductViewModel = hiltViewModel(),
     categoryViewModel: CategoryViewModel = hiltViewModel()
 ){
-    Scaffold(
-        topBar = {MyTopAppBar(onProfileClick, onCartClick)},
-        bottomBar = {BottomNavigationBar()},
-    )
-    { paddingValues ->
         Column(
-            modifier = Modifier.fillMaxSize().padding(paddingValues)
+            modifier = Modifier.fillMaxSize().padding(16.dp)
         )
         {
             // Search section
@@ -105,7 +98,6 @@ fun HomeScreen(
                         }
 
                 }
-            }
         }
     }
 }
