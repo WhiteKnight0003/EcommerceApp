@@ -17,27 +17,35 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.ecommerceapp.model.Product
+import com.example.ecommerceapp.viewmodel.ProductDetailsViewModel
 
 @Composable
 fun ProductDetailsScreen(
     productID: String,
-    navController: NavController
+    navController: NavController,
+    productDetailsViewModel: ProductDetailsViewModel = hiltViewModel()
 ) {
     // Ferch produuct Detaila
 
-    val product = Product("1", "TIvi", 100.5, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/i/tivi-xiaomi-qled-4k-a-pro-43-inch-2026_1_.png", "1")
+    LaunchedEffect(productID) {
+        productDetailsViewModel.fetchProductDetails(productID)
+    }
+    val product = productDetailsViewModel.product.collectAsState().value
 
     if(product == null){
-        Text(text = "Produuct not found")
+        Text(text = "Product not found")
     }else{
         Column(
             modifier = Modifier.fillMaxSize().padding(16.dp)
@@ -79,7 +87,6 @@ fun ProductDetailsScreen(
                 fontWeight = FontWeight.Bold
             )
         }
-
         IconButton(
             onClick = {}, // add to card event
             modifier = Modifier.height(16.dp).background(

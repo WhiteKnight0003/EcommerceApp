@@ -13,21 +13,23 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.ecommerceapp.model.Category
 import com.example.ecommerceapp.screen.navigator.Screens
+import com.example.ecommerceapp.viewmodel.CategoryViewModel
 
 @Composable
 fun CategoryScreen(
-    navController: NavController
+    navController: NavController,
+    categoryViewModel: CategoryViewModel = hiltViewModel()
 ) {
-    val categories: List<Category> = listOf(
-        Category("1", "Elec", "https://cdn-icons-png.flaticon.com/128/18405/18405048.png"),
-        Category("2", "Elecczxczxc", "https://cdn-icons-png.flaticon.com/128/17408/17408214.png")
-    )
+    val categories = categoryViewModel.categories.collectAsState().value
 
     Column(){
         if(categories.isEmpty()){

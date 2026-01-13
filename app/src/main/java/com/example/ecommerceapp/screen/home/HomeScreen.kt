@@ -62,7 +62,7 @@ fun HomeScreen(
                 navController.navigate(Screens.CategoryList.route)
             }
             // Mock the categories
-            val selectedCategory = remember { mutableStateOf(0) }
+            val selectedCategory = remember { mutableStateOf("") }
             val categories = categoryViewModel.categories.collectAsState().value
 
             LazyRow(
@@ -73,9 +73,11 @@ fun HomeScreen(
                     CategoryChip(
                         icon = categories[it].iconUrl,
                         text = categories[it].name,
-                        isSelected = selectedCategory.value == it,
+                        isSelected = selectedCategory.value == categories[it].id,
                         onClick = {
-                            selectedCategory.value = it
+                            selectedCategory.value = categories[it].id
+
+                            navController.navigate(Screens.ProductsList.createRoute(categories[it].id))
                         }
                     )
                 }

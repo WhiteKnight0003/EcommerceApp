@@ -1,5 +1,7 @@
 package com.example.ecommerceapp.model
 
+import com.google.firebase.firestore.DocumentId
+
 data class Product(
     val id: String ="",
     val name: String ="",

@@ -52,14 +52,15 @@ class FirestoreRepository @Inject constructor(
         }
     }
 
+    // productId ở đây là mã cuả cả 1 object produuuct
     suspend fun getProductById(productId: String): Product?{
         return try {
             val result = firestore.collection("Product")
-                .document(productId)
+                .whereEqualTo("id", productId)
                 .get()
                 .await()
 
-            result.toObject(Product::class.java)
+            result.toObjects(Product::class.java).firstOrNull() // lấy phần tử đầu tiên
         }catch (e: Exception){
             null
         }
