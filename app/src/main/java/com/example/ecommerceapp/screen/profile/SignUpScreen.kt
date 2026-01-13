@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -22,23 +23,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.ecommerceapp.viewmodel.AuthViewModel
 
 @Composable
 fun SignUpScreen(
     navController: NavController,
     onNavigateToLogin: () -> Unit,
-    onSignUpSucess: () -> Unit
+    onSignUpSucess: () -> Unit,
+    authViewModel: AuthViewModel = hiltViewModel()
 ) {
     var email = remember { mutableStateOf("") }
+    var name = remember { mutableStateOf("") }
     var password = remember { mutableStateOf("") }
     var confirmPassword = remember { mutableStateOf("") }
     var passwordError = remember { mutableStateOf<String?>(null) }
-    val authState = remember { mutableStateOf(false) }
 
-    // Sử dụng LaunchedEffect để xử lý điều hướng sau khi trạng thái thay đổi
-    if (authState.value) {
-        LaunchedEffect(Unit) {
+    val authState = authViewModel.authState.collectAsState().value
+
+    LaunchedEffect(authState){
+        if(authState is AuthViewModel.AuthState.Success){
             onSignUpSucess()
         }
     }
@@ -52,6 +57,18 @@ fun SignUpScreen(
             text = "Create Accouunt",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 32.dp)
+        )
+
+        OutlinedTextField(
+            value= name.value,
+            onValueChange = {name.value = it},
+            label = {Text("Name")},
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
+            ),
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+            singleLine = true
         )
 
         OutlinedTextField(
@@ -109,6 +126,7 @@ fun SignUpScreen(
                 else{
                     passwordError.value = null
                     // View Model call
+                    authViewModel.Signup(name.value,email.value, password.value)
                 }
             },
             modifier = Modifier.fillMaxWidth().height(50.dp)

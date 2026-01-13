@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -16,6 +17,7 @@ import com.example.ecommerceapp.screen.products.ProductScreen
 import com.example.ecommerceapp.screen.profile.LoginScreen
 import com.example.ecommerceapp.screen.profile.ProfileScreen
 import com.example.ecommerceapp.screen.profile.SignUpScreen
+import com.example.ecommerceapp.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,9 +28,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             // navigation
             val navController = rememberNavController()
+            val  authViewModel: AuthViewModel = hiltViewModel()
             NavHost(
                 navController = navController,
-                startDestination = Screens.Home.route //Screens.Signup.route
+                startDestination = Screens.Signup.route
             ) {
                 composable(Screens.Home.route){
                     HomeScreen(

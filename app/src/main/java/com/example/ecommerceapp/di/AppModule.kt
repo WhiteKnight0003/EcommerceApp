@@ -5,6 +5,8 @@ import com.example.ecommerceapp.repositories.CartRepository
 import com.example.ecommerceapp.room.AppDatabase
 import com.example.ecommerceapp.room.CartDao
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import dagger.Module
@@ -39,4 +41,8 @@ object AppModule {
     fun provideCartRepository(cartDao: CartDao): CartRepository{
         return CartRepository(cartDao)
     }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuuth(): FirebaseAuth = Firebase.auth
 }
