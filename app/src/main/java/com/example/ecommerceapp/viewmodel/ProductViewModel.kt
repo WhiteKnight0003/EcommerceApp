@@ -24,7 +24,7 @@ class ProductViewModel @Inject constructor(
     private val _allproduct = MutableStateFlow<List<Product>>(emptyList())
     val allproduct : StateFlow<List<Product>> get() = _allproduct
 
-    private fun fetchProductsByCategory(categoryId: String){
+    fun fetchProductsByCategory(categoryId: String){
         viewModelScope.launch {
             try{
                 val products = repository.getProductByCategory(categoryId)
@@ -35,7 +35,7 @@ class ProductViewModel @Inject constructor(
         }
     }
 
-    private fun getAllProductsInFirestore(){
+    fun getAllProductsInFirestore(){
         viewModelScope.launch {
             try{
                 val products = repository.getAllProductInFireStore()

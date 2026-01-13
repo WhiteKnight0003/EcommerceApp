@@ -16,7 +16,9 @@ import com.example.ecommerceapp.screen.products.ProductScreen
 import com.example.ecommerceapp.screen.profile.LoginScreen
 import com.example.ecommerceapp.screen.profile.ProfileScreen
 import com.example.ecommerceapp.screen.profile.SignUpScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +28,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             NavHost(
                 navController = navController,
-                startDestination = Screens.Signup.route
+                startDestination = Screens.Home.route //Screens.Signup.route
             ) {
                 composable(Screens.Home.route){
                     HomeScreen(

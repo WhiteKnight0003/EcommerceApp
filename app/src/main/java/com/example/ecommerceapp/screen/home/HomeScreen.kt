@@ -13,22 +13,28 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.ecommerceapp.model.Category
 import com.example.ecommerceapp.model.Product
 import com.example.ecommerceapp.screen.navigator.Screens
+import com.example.ecommerceapp.viewmodel.CategoryViewModel
+import com.example.ecommerceapp.viewmodel.ProductViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     navController : NavController,
     onProfileClick: () -> Unit,
-    onCartClick: () -> Unit
+    onCartClick: () -> Unit,
+    productViewModel: ProductViewModel = hiltViewModel(),
+    categoryViewModel: CategoryViewModel = hiltViewModel()
 ){
     Scaffold(
         topBar = {MyTopAppBar(onProfileClick, onCartClick)},
@@ -57,10 +63,8 @@ fun HomeScreen(
             }
             // Mock the categories
             val selectedCategory = remember { mutableStateOf(0) }
-            val categories: List<Category> = listOf(
-                Category("1", "Elec", "https://cdn-icons-png.flaticon.com/128/18405/18405048.png"),
-                Category("2", "Elecczxczxc", "https://cdn-icons-png.flaticon.com/128/17408/17408214.png")
-            )
+            val categories = categoryViewModel.categories.collectAsState().value
+
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -83,19 +87,16 @@ fun HomeScreen(
                // navController.navigate(Screens.Products.route)
             }
             // Mock the product
-            // val selectedCategory = remember { mutableStateOf(0) }
-            val products = listOf(
-                Product("1", "TIvi", 100.5, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/i/tivi-xiaomi-qled-4k-a-pro-43-inch-2026_1_.png", "1"),
-                Product("4", "Quạt ", 50.6, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/q/u/qu_t_2.png", "2"),
-                Product("5", "Nồi chiên không dầu", 110.0, "https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/n/o/noi-chien-khong-dau-gaabor-af-45t01a-5l.1.png", "1"),
-            )
+            productViewModel.getAllProductsInFirestore() // call fun
+            val products = productViewModel.allproduct.collectAsState().value
+
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(products){ product ->
                     FeatureProducCart(product) {
-
+                        navController.navigate(Screens.ProductDetails.createRoute(product.id))
                     }
 
                 }
