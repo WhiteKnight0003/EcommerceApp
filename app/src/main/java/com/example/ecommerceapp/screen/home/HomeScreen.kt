@@ -86,7 +86,9 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(16.dp))
             // feature product section
             SectionTile("Feature Product", "See All") {
-               // navController.navigate(Screens.Products.route)
+
+                //////
+                navController.navigate(Screens.CategoryList.route)
             }
             // Mock the product
             productViewModel.getAllProductsInFirestore() // call fun
@@ -97,9 +99,10 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(products){ product ->
-                    FeatureProducCart(product) {
-                        navController.navigate(Screens.ProductDetails.createRoute(product.id))
-                    }
+                    if(product.feature)
+                        FeatureProducCart(product) {
+                            navController.navigate(Screens.ProductDetails.createRoute(product.id))
+                        }
 
                 }
             }
