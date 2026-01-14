@@ -53,7 +53,7 @@ fun FeatureProducCart(
                     painter = rememberAsyncImagePainter(product.imageUrl),
                     contentDescription = product.name,
                     contentScale = ContentScale.Fit,
-                    modifier = Modifier.fillMaxWidth().width(150.dp)
+                    modifier = Modifier.fillMaxWidth().width(180.dp)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 

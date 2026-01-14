@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.ecommerceapp.model.Product
@@ -51,7 +52,10 @@ fun CartItemCard(
             ) {
                 Text(
                     text = item.name,
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+
                 )
                 Text(
                     text = "$${item.price}",
@@ -59,19 +63,19 @@ fun CartItemCard(
                 )
             }
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ){
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Text(
-                        text = item.name,
-                        modifier = Modifier.padding(horizontal = 8.dp),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
-            }
+//            Column(
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//            ){
+//                Row(
+//                    verticalAlignment = Alignment.CenterVertically
+//                ){
+//                    Text(
+//                        text = item.name,
+//                        modifier = Modifier.padding(horizontal = 8.dp),
+//                        style = MaterialTheme.typography.bodyLarge
+//                    )
+//                }
+//            }
 
             IconButton(
                 onClick = onRemoveItem,

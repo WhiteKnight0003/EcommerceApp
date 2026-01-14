@@ -1,6 +1,7 @@
 package com.example.ecommerceapp.repositories
 
 import android.util.Log
+import androidx.room.Query
 import com.example.ecommerceapp.model.Category
 import com.example.ecommerceapp.model.Product
 import com.google.firebase.firestore.FirebaseFirestore
@@ -74,6 +75,23 @@ class FirestoreRepository @Inject constructor(
 
             result
         }catch (e: Exception){
+            emptyList()
+        }
+    }
+
+    suspend fun searchProducts(query: String): List<Product>{
+        return try{
+            val searchQuery = query.lowercase()
+            val allProduct = firestore.collection("Product").get().await().mapNotNull {
+                it.toObject(Product::class.java)
+            }
+
+            // filter product where name contains the query
+            allProduct.filter { product ->
+                product.name.lowercase().contains(searchQuery)
+            }
+        }catch (e: Exception){
+            Log.e("TagY", "Error searching products : ${e.message}")
             emptyList()
         }
     }

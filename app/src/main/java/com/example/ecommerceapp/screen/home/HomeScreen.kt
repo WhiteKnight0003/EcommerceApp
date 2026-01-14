@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +25,7 @@ import androidx.navigation.NavController
 import com.example.ecommerceapp.screen.navigator.Screens
 import com.example.ecommerceapp.viewmodel.CategoryViewModel
 import com.example.ecommerceapp.viewmodel.ProductViewModel
+import com.example.ecommerceapp.viewmodel.SearchViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -32,7 +34,8 @@ fun HomeScreen(
     onProfileClick: () -> Unit,
     onCartClick: () -> Unit,
     productViewModel: ProductViewModel = hiltViewModel(),
-    categoryViewModel: CategoryViewModel = hiltViewModel()
+    categoryViewModel: CategoryViewModel = hiltViewModel(),
+    searchViewModel: SearchViewModel = hiltViewModel()
 ){
         Column(
             modifier = Modifier.fillMaxSize().padding(16.dp)
@@ -44,11 +47,19 @@ fun HomeScreen(
             SearchBar(
                 query = searchQuery.value,
                 onQueryChange = {searchQuery.value = it},
-                onSearch = {},
+                onSearch = {
+                    searchViewModel.searchProducts(searchQuery.value)
+                    focusManager.clearFocus()
+                },
                 modifier = Modifier.fillMaxWidth().padding(16.dp)
             )
 
             // Search result section
+            if(searchQuery.value.isNotBlank()){
+                SearchResultsSection(
+                    navController = navController
+                )
+            }
 
             // category section
             SectionTile("Category", "See All") {
@@ -84,7 +95,10 @@ fun HomeScreen(
                 navController.navigate(Screens.CategoryList.route)
             }
             // Mock the product
-            productViewModel.getAllProductsInFirestore() // call fun
+            LaunchedEffect(Unit) {
+                productViewModel.getAllProductsInFirestore()
+            }
+
             val products = productViewModel.allproduct.collectAsState().value
 
             LazyRow(
